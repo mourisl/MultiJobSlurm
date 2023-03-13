@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+#SBATCH --job-name=kir
+#SBATCH --output=slurm_annot.out
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=2G
+
+
+# This script is to submit multiple jobs 
+# usage: sbatch a.scr sample.list
+line=`wc -l $1 | cut -f1 -d' '`
+block=20
+#block=2
+l=1
+date
+
+while [ $l -le $line ]
+do
+	#sed -n $l,$(($l+$block-1))p $1
+	sbatch -o slurm_annot_${l}.out run_program.scr $1 $l $(($l+$block-1))
+	l=$(($l+$block))
+done

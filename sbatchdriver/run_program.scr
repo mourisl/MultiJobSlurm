@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+#SBATCH --job-name=job
+#SBATCH --output=slurm_$j.out
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=48G
+
+# This script is to extract subset from summary and run the perl script
+# usage: sbatch a.scr sample.list row_start row_end
+module load gcc/7.3.0
+for sample in `sed -n $2,${3}p $1`
+do
+	echo $sample
+done

@@ -1,0 +1,16 @@
+configfile: "config.yaml"
+
+rule all:
+	input:
+		expand("result/{sample}_genotype.tsv", sample=config["samples"])
+
+rule t1k:
+	input:
+		read1="data/{sample}_1.fq",
+		read2="data/{sample}_2.fq",
+		ref="kiridx/kir_rna_seq.fa"
+	output:
+		"result/{sample}_genotype.tsv"
+	shell:
+		"./run-t1k -1 {input.read1} -2 {input.read2} -f {input.ref} --od result -o {wildcards.sample} -t 8"
+
