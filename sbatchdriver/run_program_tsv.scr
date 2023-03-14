@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+#SBATCH --job-name=job
+#SBATCH --output=slurm.out
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
+
+# This script is to extract subset from summary and run the perl script
+# usage: sbatch a.scr sample.list row_start row_end
+while IFS=$'\t' read -r s1 s2
+do
+	echo $s1
+done < <(sed -n $2,${3}p $1)
